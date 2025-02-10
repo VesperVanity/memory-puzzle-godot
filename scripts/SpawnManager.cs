@@ -9,15 +9,18 @@ public partial class SpawnManager : Node2D
 	private Area2D card_instance;
 	private Control gui_container;
 	private Node2D spawn_start_position;
-	private int card_amount = 0;
-	private bool is_map_spawned = false;
-	private bool is_map_ready_to_spawn = false;
-
 	private RandomNumberGenerator rng = new RandomNumberGenerator();
 	private List<int> taken_random_numbers = new List<int>();
+	private List<Area2D> cards = new List<Area2D>();
+	private int card_amount = 0;
 	private int random_card_label_number = 0;
 	private int one_pair_counter = 0;
 	private int card_counter = 0;
+	private bool is_map_spawned = false;
+	private bool is_map_ready_to_spawn = false;
+
+	
+
 	public override void _Ready()
 	{
 		card_scene = ResourceLoader.Load<PackedScene>("res://scenes/card.tscn");
@@ -35,7 +38,28 @@ public partial class SpawnManager : Node2D
 		}
 	}
 
-	private void randomize_cards()
+	private void randomize_card_positions()
+	{
+		if(card_counter == card_amount)
+		{
+			for(int i = 0; i < card_amount; ++i)
+			{
+				//Randomize the positions of the cards
+				int random_card_number;
+				int random_swap_card_number;
+				random_card_number = rng.RandiRange(1, card_amount - 1);
+				random_swap_card_number = rng.RandiRange(1, card_amount - 1);
+				Area2D random_card = cards.ElementAt(random_card_number);
+				Vector2 random_card_position = random_card.Position;
+				Area2D random_swap_card = cards.ElementAt(random_swap_card_number);
+				Vector2 random_swap_card_position = random_swap_card.Position;
+				random_card.Position = random_swap_card_position;
+				random_swap_card.Position = random_card_position;
+			}
+		}
+	}
+
+	private void create_pairs()
 	{
 		if(one_pair_counter == 0)
 		{
@@ -108,9 +132,8 @@ public partial class SpawnManager : Node2D
 				card_instance.Position += spawn_position_y_offset * 8;
 				card_instance.Position -= spawn_position_x_reset * 80;
 			}
-			
-			
 		}
+		randomize_card_positions();
 	}
 
 	private void spawn_card()
@@ -118,8 +141,9 @@ public partial class SpawnManager : Node2D
 		card_instance = card_scene.Instantiate<Area2D>();
 		card = (Card)card_instance;
 		spawn_start_position.AddChild(card_instance);
-		randomize_cards();
-		
+		cards.Add(card_instance);
+		card_counter++;
+		create_pairs();
 	}
 
 	private void _on_size_small_button_pressed()
