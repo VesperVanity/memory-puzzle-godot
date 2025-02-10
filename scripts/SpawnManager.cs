@@ -1,9 +1,9 @@
 using Godot;
 using System;
-
+using System.Linq;
 public partial class SpawnManager : Node2D
 {
-	
+	private Card card;
 	private PackedScene card_scene;
 	private Area2D card_instance;
 	private Control gui_container;
@@ -11,6 +11,12 @@ public partial class SpawnManager : Node2D
 	private int card_amount = 0;
 	private bool is_map_spawned = false;
 	private bool is_map_ready_to_spawn = false;
+
+	private RandomNumberGenerator rng = new RandomNumberGenerator();
+	private int[] taken_random_numbers = new int[80];
+	private int random_card_label_number = 0;
+	private int one_pair_counter = 0;
+	private int card_counter = 0;
 	public override void _Ready()
 	{
 		card_scene = ResourceLoader.Load<PackedScene>("res://scenes/card.tscn");
@@ -25,6 +31,35 @@ public partial class SpawnManager : Node2D
 		{
 			spawn_map();
 			is_map_spawned = true;
+		}
+	}
+
+	private void randomize_cards()
+	{
+		if(one_pair_counter == 0)
+		{
+			random_card_label_number = rng.RandiRange(1, 20);
+			while(taken_random_numbers.Contains(random_card_label_number))
+			{
+				random_card_label_number = rng.RandiRange(1, 20);
+				GD.Print(random_card_label_number);
+				
+			}
+			
+		}
+		if(one_pair_counter < 2)
+		{
+			card.card_label.Text = random_card_label_number.ToString();
+			one_pair_counter++;
+		}
+		if(one_pair_counter == 2)
+		{
+			//Maybe create an array which you read the random numbers into
+			//And before creating another random number we iterate over the array
+			//Of already taken numbers until we have the full range of card pairs
+			taken_random_numbers.Append(random_card_label_number);
+			GD.Print(taken_random_numbers.First());
+			one_pair_counter = 0;
 		}
 	}
 
@@ -84,7 +119,10 @@ public partial class SpawnManager : Node2D
 	private void spawn_card()
 	{
 		card_instance = card_scene.Instantiate<Area2D>();
+		card = (Card)card_instance;
 		spawn_start_position.AddChild(card_instance);
+		randomize_cards();
+		
 	}
 
 	private void _on_size_small_button_pressed()

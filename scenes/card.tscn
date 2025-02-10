@@ -11,3 +11,7 @@ script = ExtResource("1_pvojm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_qtg4q")
+
+[node name="card_label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
