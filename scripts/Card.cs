@@ -36,6 +36,9 @@ public partial class Card : Area2D
 	}
 
 	
-	
+	public void hide_all_cards()
+	{
+		is_revealed = false;
+	}
 
 }
