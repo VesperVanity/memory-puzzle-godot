@@ -15,3 +15,6 @@ shape = SubResource("RectangleShape2D_qtg4q")
 [node name="card_label" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
