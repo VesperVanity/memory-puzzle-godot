@@ -69,5 +69,5 @@ debug_color = Color(0.941857, 0.224136, 0.238975, 0.42)
 [connection signal="pressed" from="GUI/gui_container/size_small_button" to="spawn_manager" method="_on_size_small_button_pressed"]
 [connection signal="pressed" from="GUI/gui_container/size_medium_button" to="spawn_manager" method="_on_size_medium_button_pressed"]
 [connection signal="pressed" from="GUI/gui_container/size_large_button" to="spawn_manager" method="_on_size_large_button_pressed"]
-[connection signal="area_shape_entered" from="mouse_area" to="." method="_on_mouse_area_area_shape_entered"]
-[connection signal="area_shape_exited" from="mouse_area" to="." method="_on_mouse_area_area_shape_exited"]
+[connection signal="area_entered" from="mouse_area" to="." method="_on_mouse_area_area_entered"]
+[connection signal="area_exited" from="mouse_area" to="." method="_on_mouse_area_area_exited"]
