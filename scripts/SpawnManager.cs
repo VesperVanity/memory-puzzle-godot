@@ -19,8 +19,6 @@ public partial class SpawnManager : Node2D
 	private bool is_map_spawned = false;
 	private bool is_map_ready_to_spawn = false;
 
-	
-
 	public override void _Ready()
 	{
 		card_scene = ResourceLoader.Load<PackedScene>("res://scenes/card.tscn");
