@@ -26,9 +26,9 @@ public partial class Main : Node2D
 	{
 		mouse_area.Position = GetLocalMousePosition();
 
-		if(is_mouse_hovering)
+		if(Input.IsMouseButtonPressed(MouseButton.Left))
 		{
-			if(Input.IsMouseButtonPressed(MouseButton.Left))
+			if(is_mouse_hovering)
 			{
 				if(is_first_card_clicked == false)
 				{
@@ -54,11 +54,8 @@ public partial class Main : Node2D
 					is_first_card_clicked = false;
 					is_second_card_clicked = false;
 				}
-				
 			}
-			
 		}
-
 	}
 
 	private void _on_mouse_area_area_entered(Area2D area)
@@ -73,6 +70,7 @@ public partial class Main : Node2D
 			else if(is_first_card_chosen)
 			{
 				second_card = (Card)area;
+				is_second_card_chosen = true;
 			}
 			is_mouse_hovering = true;
 		}
