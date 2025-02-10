@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://56gx750jtx1s"]
+[gd_scene load_steps=4 format=3 uid="uid://56gx750jtx1s"]
 
 [ext_resource type="Script" path="res://scripts/Card.cs" id="1_pvojm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qtg4q"]
 size = Vector2(100, 100)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yawnm"]
 
 [node name="card" type="Area2D"]
 collision_mask = 6
@@ -17,3 +19,24 @@ offset_left = -7.0
 offset_top = -12.0
 offset_right = 33.0
 offset_bottom = 11.0
+
+[node name="card_button" type="Button" parent="."]
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+toggle_mode = true
+flat = true
+
+[node name="mouse_area" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mouse_area"]
+shape = SubResource("CircleShape2D_yawnm")
+debug_color = Color(0.943903, 0.167847, 0.428962, 0.42)
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="toggled" from="card_button" to="." method="_on_card_button_toggled"]
+[connection signal="area_entered" from="mouse_area" to="." method="_on_mouse_area_area_entered"]
+[connection signal="area_exited" from="mouse_area" to="." method="_on_mouse_area_area_exited"]

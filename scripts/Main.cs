@@ -28,13 +28,13 @@ public partial class Main : Node2D
 	
 	public override void _Process(double delta)
 	{
-		mouse_area.Position = GetLocalMousePosition();
+		//mouse_area.Position = GetLocalMousePosition();
 
 		//Let's try a new tactic, reveal all clicked cards
 		//Sweep the board after two cards are revealed
 		//All cards, unless the ones clicked before if it's a pair
 
-		if(Input.IsMouseButtonPressed(MouseButton.Left))
+		/*if(Input.IsMouseButtonPressed(MouseButton.Left))
 		{
 			if(is_mouse_hovering)
 			{
@@ -68,6 +68,7 @@ public partial class Main : Node2D
 			is_second_card_clicked = false;
 			card_clicked_counter = 0;
 		}
+		*/
 	}
 
 	private void _on_mouse_area_area_entered(Area2D area)
