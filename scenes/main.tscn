@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://diudeki3ahb35"]
+[gd_scene load_steps=4 format=3 uid="uid://diudeki3ahb35"]
 
 [ext_resource type="Script" path="res://scripts/Main.cs" id="1_m6oil"]
 [ext_resource type="Script" path="res://scripts/SpawnManager.cs" id="2_mujgg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1vjo2"]
+radius = 4.0
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_m6oil")
@@ -56,6 +59,15 @@ script = ExtResource("2_mujgg")
 [node name="spawn_start_position" type="Node2D" parent="spawn_manager"]
 position = Vector2(400, 100)
 
+[node name="mouse_area" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mouse_area"]
+shape = SubResource("CircleShape2D_1vjo2")
+debug_color = Color(0.941857, 0.224136, 0.238975, 0.42)
+
 [connection signal="pressed" from="GUI/gui_container/size_small_button" to="spawn_manager" method="_on_size_small_button_pressed"]
 [connection signal="pressed" from="GUI/gui_container/size_medium_button" to="spawn_manager" method="_on_size_medium_button_pressed"]
 [connection signal="pressed" from="GUI/gui_container/size_large_button" to="spawn_manager" method="_on_size_large_button_pressed"]
+[connection signal="area_shape_entered" from="mouse_area" to="." method="_on_mouse_area_area_shape_entered"]
+[connection signal="area_shape_exited" from="mouse_area" to="." method="_on_mouse_area_area_shape_exited"]

@@ -7,16 +7,15 @@ public partial class Card : Area2D
 {
 	
 	public Label card_label;
-	private List<Area2D> cards = new List<Area2D>();
+	public List<Area2D> cards = new List<Area2D>();
 
-	private bool is_mouse_hovering = false;
+	public bool is_revealed = false;
 
-	private int card_clicked_counter = 0;
 	public override void _Ready()
 	{
 		card_label = GetNode<Label>("card_label");
 		card_label.Visible = false;
-		
+		cards.Add(this);
 	}
 
 	//All the logic and counters here simply do not work
@@ -25,37 +24,18 @@ public partial class Card : Area2D
 	//A new way of figuring it out
 	public override void _Process(double delta)
 	{
+		if(is_revealed)
+		{
+			card_label.Visible = true;
+		}
+		else if(is_revealed == false)
+		{
+			card_label.Visible = false;
+		}
 		
-		if(is_mouse_hovering)
-		{
-			if(Input.IsMouseButtonPressed(MouseButton.Left))
-			{
-				card_label.Visible = true;
-				card_clicked_counter++;
-				GD.Print(card_clicked_counter);
-				cards.Add(this);
-			}
-		}
-
-		if(card_clicked_counter == 2)
-		{
-			foreach(Area2D card in cards)
-			{
-				card_label.Visible = false;
-			}
-			card_clicked_counter = 0;
-		}
 	}
 
-	private void _on_mouse_entered()
-	{
-		is_mouse_hovering = true;
-	}
-
-	private void _on_mouse_exited()
-	{
-		is_mouse_hovering = false;
-	}
+	
 	
 
 }

@@ -13,8 +13,7 @@ script = ExtResource("1_pvojm")
 shape = SubResource("RectangleShape2D_qtg4q")
 
 [node name="card_label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+offset_left = -7.0
+offset_top = -12.0
+offset_right = 33.0
+offset_bottom = 11.0
