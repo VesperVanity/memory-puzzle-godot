@@ -6,17 +6,17 @@ using System.Linq;
 public partial class Card : Area2D
 {	
 	private Main main;
-	private Card card;
-	private Button button;
+	private Card clicked_card;
 	public Label card_label;
-	public List<Area2D> cards = new List<Area2D>();
+	private Area2D mouse_area;
 
 	public bool is_revealed = false;
+	private bool is_permanent_revealed = false;
 
 	public override void _Ready()
 	{
 		card_label = GetNode<Label>("card_label");
-		button = GetNode<Button>("card_button");
+		mouse_area = GetNode<Area2D>("mouse_area");
 		main = GetNode<Main>("../../../../main");
 		card_label.Visible = false;
 	
@@ -28,7 +28,7 @@ public partial class Card : Area2D
 	//A new way of figuring it out
 	public override void _Process(double delta)
 	{
-		
+		mouse_area.Position = GetLocalMousePosition();
 		if(is_revealed)
 		{
 			card_label.Visible = true;
@@ -37,19 +37,12 @@ public partial class Card : Area2D
 		{
 			card_label.Visible = false;
 		}
-		
-	}
 
-	private void _on_card_button_toggled(bool toggled_on)
-	{
-		if(toggled_on)
+		if(is_permanent_revealed)
 		{
-			is_revealed = true;
+			card_label.Visible = true;
 		}
-		else if(toggled_on == false)
-		{
-			is_revealed = false;
-		}
+		
 	}
 
 	private void _on_input_event(Node viewport, InputEvent @event, int shape_idx)
@@ -65,7 +58,41 @@ public partial class Card : Area2D
 				is_revealed = true;
 			}
 			main.card_clicked_counter++;
+			if(main.card_clicked_counter == 2)
+			{
+				//Problem is they are separate entities all reporting the same thing
+				//All numbers checking for all numbers means all cards will always
+				//Count as being permanently revealed
+				//Wrestling with that problem since 5 hours
+				if(card_label.Text == clicked_card.card_label.Text)
+				{
+					is_permanent_revealed = true;
+				}
+				else
+				{
+					is_revealed = false;
+					clicked_card.is_revealed = false;
+				}
+				main.card_clicked_counter = 0;
+			}
 			
+		}
+		
+	}
+
+	private void _on_mouse_area_area_entered(Area2D area)
+	{
+		if(area is Card)
+		{
+			clicked_card = (Card)area;
+		}
+	}
+
+	private void _on_mouse_area_area_exited(Area2D area)
+	{
+		if(area is Card)
+		{
+			clicked_card = null;
 		}
 	}
 
