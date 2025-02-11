@@ -8,15 +8,20 @@ public partial class Card : Area2D
 	private Main main;
 	public Label card_label;
 
+	private Area2D first_card;
+	private Area2D second_card;
+
 	public bool is_revealed = false;
 	public bool is_permanent_revealed = false;
+
+	public string card_name = " ";
 
 	public override void _Ready()
 	{
 		card_label = GetNode<Label>("card_label");
 		main = GetNode<Main>("../../../../main");
 		card_label.Visible = false;
-	
+		//main.Connect("Checkpair", Callable.From())
 	}
 
 	//All the logic and counters here simply do not work
@@ -59,6 +64,11 @@ public partial class Card : Area2D
 			//Count as being permanently revealed
 			//Wrestling with that problem since 5 hours
 		}
+		
+	}
+
+	private void check_pair()
+	{
 		
 	}
 

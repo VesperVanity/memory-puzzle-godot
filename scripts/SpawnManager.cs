@@ -70,7 +70,16 @@ public partial class SpawnManager : Node2D
 		if(one_pair_counter < 2)
 		{
 			card.card_label.Text = random_card_label_number.ToString();
+			
 			one_pair_counter++;
+			if(one_pair_counter == 1)
+			{
+				card.card_name = "card_name_one";
+			}
+			else if(one_pair_counter == 2)
+			{
+				card.card_name = "card_name_two";
+			}
 		}
 		if(one_pair_counter == 2)
 		{
